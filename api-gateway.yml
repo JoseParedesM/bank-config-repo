@@ -7,31 +7,28 @@ spring:
       discovery:
         locator:
           enabled: false
-          lower-case-service-id: true
       routes:
         - id: client-service
-          uri: lb://client-service
+          uri: lb://CLIENT-SERVICE
           predicates:
-            - Path=/api/clients, /api/clients/**
+            - Path=/api/clients/**
             
         - id: bank-account-service
-          uri: lb://bank-account-service
+          uri: lb://BANK-ACCOUNT-SERVICE
           predicates:
-            - Path=/api/bank-accounts, /api/bank-accounts/**
+            - Path=/api/bank-accounts/**
             
         - id: credit-service
-          uri: lb://credit-service
+          uri: lb://CREDIT-SERVICE
           predicates:
-            - Path=/api/credits, /api/credits/**
+            - Path=/api/credits/**
             
         - id: transaction-service
-          uri: lb://transaction-service
+          uri: lb://TRANSACTION-SERVICE
           predicates:
-            - Path=/api/transactions, /api/transactions/**
+            - Path=/api/transactions/**
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true

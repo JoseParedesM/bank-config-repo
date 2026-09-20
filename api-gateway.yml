@@ -6,27 +6,28 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
+          enabled: false
+          lower-case-service-id: true
       routes:
         - id: client-service
-          uri: lb://CLIENT-SERVICE
+          uri: lb://client-service
           predicates:
-            - Path=/api/clients/**
+            - Path=/api/clients, /api/clients/**
             
         - id: bank-account-service
-          uri: lb://BANK-ACCOUNT-SERVICE
+          uri: lb://bank-account-service
           predicates:
-            - Path=/api/bank-accounts/**
+            - Path=/api/bank-accounts, /api/bank-accounts/**
             
         - id: credit-service
-          uri: lb://CREDIT-SERVICE
+          uri: lb://credit-service
           predicates:
-            - Path=/api/credits/**
+            - Path=/api/credits, /api/credits/**
             
         - id: transaction-service
-          uri: lb://TRANSACTION-SERVICE
+          uri: lb://transaction-service
           predicates:
-            - Path=/api/transactions/**
+            - Path=/api/transactions, /api/transactions/**
 
 eureka:
   client:

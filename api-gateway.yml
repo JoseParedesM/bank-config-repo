@@ -14,18 +14,55 @@ spring:
               uri: lb://CLIENT-SERVICE
               predicates:
                 - Path=/api/clients/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: clientCircuitBreaker
+                    fallbackUri: forward:/fallback/client
+            
             - id: bank-account-service
               uri: lb://BANK-ACCOUNT-SERVICE
               predicates:
                 - Path=/api/bank-accounts/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: bankAccountCircuitBreaker
+                    fallbackUri: forward:/fallback/bankAccount
+            
             - id: credit-service
               uri: lb://CREDIT-SERVICE
               predicates:
                 - Path=/api/credits/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: creditCircuitBreaker
+                    fallbackUri: forward:/fallback/credit
+            
             - id: transaction-service
               uri: lb://TRANSACTION-SERVICE
               predicates:
                 - Path=/api/transactions/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: transactionCircuitBreaker
+                    fallbackUri: forward:/fallback/transaction
+
+# Configuración obligatoria del Circuit Breaker (Timeout de 2 segundos)
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 2s # <-- Requisito del documento cumplido
 
 eureka:
   client:

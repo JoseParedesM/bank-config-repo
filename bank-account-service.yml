@@ -7,6 +7,14 @@ spring:
       uri: mongodb://localhost:27017
       database: bank_account_db
 
+bank-account:
+  minimum-opening-amount: 0
+  transaction:
+    max-free-per-month: 20
+    commission-per-excess: 2.00
+  vip:
+    minimum-average-daily-balance: 0
+
 eureka:
   client:
     service-url:

@@ -6,6 +6,7 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: transaction_db
+      auto-index-creation: true
 
 eureka:
   client:

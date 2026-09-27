@@ -1,6 +1,12 @@
 server:
   port: 8080
 
+security:
+  jwt:
+    secret-base64: ${JWT_SECRET_BASE64}
+    issuer: bank-bootcamp
+    audience: bank-api
+
 spring:
   cloud:
     gateway:

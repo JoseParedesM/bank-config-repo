@@ -1,6 +1,12 @@
 server:
   port: 8081
 
+security:
+  jwt:
+    secret-base64: ${JWT_SECRET_BASE64}
+    issuer: bank-bootcamp
+    audience: bank-api
+
 spring:
   data:
     mongodb:

@@ -50,6 +50,16 @@ spring:
                     name: transactionCircuitBreaker
                     fallbackUri: forward:/fallback/transaction
 
+            - id: yanki-service
+              uri: lb://YANKI-SERVICE
+              predicates:
+                - Path=/api/yanki/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: yankiCircuitBreaker
+                    fallbackUri: forward:/fallback/yanki
+
 # Configuración obligatoria del Circuit Breaker (Timeout de 2 segundos)
 resilience4j:
   circuitbreaker:
@@ -59,10 +69,32 @@ resilience4j:
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
         permittedNumberOfCallsInHalfOpenState: 3
+    instances:
+      clientCircuitBreaker:
+        baseConfig: default
+      bankAccountCircuitBreaker:
+        baseConfig: default
+      creditCircuitBreaker:
+        baseConfig: default
+      transactionCircuitBreaker:
+        baseConfig: default
+      yankiCircuitBreaker:
+        baseConfig: default
   timelimiter:
     configs:
       default:
         timeoutDuration: 2s # <-- Requisito del documento cumplido
+    instances:
+      clientCircuitBreaker:
+        baseConfig: default
+      bankAccountCircuitBreaker:
+        baseConfig: default
+      creditCircuitBreaker:
+        baseConfig: default
+      transactionCircuitBreaker:
+        baseConfig: default
+      yankiCircuitBreaker:
+        baseConfig: default
 
 eureka:
   client:

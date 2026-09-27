@@ -1,27 +1,33 @@
 server:
-  port: 8084
+  port: 8085
 
 spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017
-      database: transaction_db
+      database: yanki_db
       auto-index-creation: true
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2s
   kafka:
     bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
-      group-id: transaction-ledger
+      group-id: yanki-service
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: com.banco.transactionservice.event
-        spring.json.value.default.type: com.banco.transactionservice.event.YankiPaymentCompletedEvent
-        spring.json.use.type.headers: false
-
+        spring.json.trusted.packages: com.banco.yankiservice.event
 yanki:
   kafka:
     payment-completed-topic: yanki.payment.completed.v1
+  redis:
+    wallet-phone-ttl: 10m
 
 eureka:
   client:
